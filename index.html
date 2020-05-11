@@ -23,21 +23,22 @@
     function setup() {
         // Initialize variables here
         var firebaseConfig = {
-            apiKey: "AIzaSyC_WnqnTqxY205dXCDZKmHIBFF4VySUpls",
-            authDomain: "testapp-67c7b.firebaseapp.com",
-            databaseURL: "https://testapp-67c7b.firebaseio.com",
-            projectId: "testapp-67c7b",
-            storageBucket: "testapp-67c7b.appspot.com",
-            messagingSenderId: "674530704381",
-            appId: "1:674530704381:web:580f4e00a413ede5983794"
-        };
+        apiKey: "AIzaSyD2euzMxNvGE3zg0uUuhKhIJZDHRADB-4w",
+        authDomain: "iot-proj-bcf82.firebaseapp.com",
+        databaseURL: "https://iot-proj-bcf82.firebaseio.com",
+        projectId: "iot-proj-bcf82",
+        storageBucket: "iot-proj-bcf82.appspot.com",
+        messagingSenderId: "376437907997",
+        appId: "1:376437907997:web:459aa3770a0a1f88e75cf4",
+        measurementId: "G-Z36BX1SJF9"
+      };
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
 
         setInterval(() => {
             var database = firebase.database();
             database.ref().on("value", function (snapshot) {
-                data = snapshot.val()["ParkingSlots"];
+                data = snapshot.val()["slots"];
             }, function (error) {
                 console.log("Error: " + error.code);
             });
@@ -48,7 +49,7 @@
     // Declare custom functions here
 
 
-    // Function while will be called repeatedly 
+    // Function while will be called repeatedly
     function main() {
 
         const width = 200;
@@ -57,23 +58,127 @@
         const offsetX = 10;
         const offsetY = 10;
 
-        canvas.setDrawMode("fill");
+        canvas.setDrawMode("stroke");
 
         canvas.clear();
+        canvas.setColor("black")
+        //border
+        canvas.drawRectangle(290,3,800,900)
+        //roads
+        canvas.setColor('grey')
+        canvas.setDrawMode("fill")
+        //top road
+        canvas.drawRectangle(320,120,680,50)
+        //lastroad vertical
+        canvas.drawRectangle(950,120,50,700)
+        //middleroad vertical
+        canvas.drawRectangle(635,120,50,700)
+        //firstroad vertical
+        canvas.drawRectangle(340,140,50,700)
+        //bottom road
+        canvas.drawRectangle(340,800,660,50)
+        //exit/entry roads
+        canvas.drawRectangle(950,675,140,50)
+        canvas.drawRectangle(290,120,140,50)
+
+        canvas.setColor("yellow")
+        //top road
+        canvas.drawRectangle(370,140,50,8)
+        canvas.drawRectangle(450,140,50,8)
+        canvas.drawRectangle(530,140,50,8)
+        canvas.drawRectangle(610,140,100,8)
+        canvas.drawRectangle(740,140,50,8)
+        canvas.drawRectangle(820,140,50,8)
+        canvas.drawRectangle(900,140,80,8)
+        //bottom road
+        canvas.drawRectangle(370,820,50,8)
+        canvas.drawRectangle(450,820,50,8)
+        canvas.drawRectangle(530,820,50,8)
+        canvas.drawRectangle(610,820,100,8)
+        canvas.drawRectangle(740,820,50,8)
+        canvas.drawRectangle(820,820,50,8)
+        canvas.drawRectangle(900,820,82,8)
+
+        //middleroad
+        canvas.drawRectangle(656,140,8,50)
+        canvas.drawRectangle(656,220,8,50)
+        canvas.drawRectangle(656,300,8,50)
+        canvas.drawRectangle(656,380,8,50)
+        canvas.drawRectangle(656,460,8,50)
+        canvas.drawRectangle(656,540,8,50)
+        canvas.drawRectangle(656,620,8,50)
+        canvas.drawRectangle(656,700,8,50)
+        canvas.drawRectangle(656,780,8,45)
+
+        //lastroad
+        canvas.drawRectangle(974,140,8,50)
+        canvas.drawRectangle(974,220,8,50)
+        canvas.drawRectangle(974,300,8,50)
+        canvas.drawRectangle(974,380,8,50)
+        canvas.drawRectangle(974,460,8,50)
+        canvas.drawRectangle(974,540,8,50)
+        canvas.drawRectangle(974,620,8,60)
+        canvas.drawRectangle(974,680,8,70)
+        canvas.drawRectangle(974,780,8,45)
+
+        //firstroad
+        canvas.drawRectangle(363,140,8,50)
+        canvas.drawRectangle(363,220,8,50)
+        canvas.drawRectangle(363,300,8,50)
+        canvas.drawRectangle(363,380,8,50)
+        canvas.drawRectangle(363,460,8,50)
+        canvas.drawRectangle(363,540,8,50)
+        canvas.drawRectangle(363,620,8,50)
+        canvas.drawRectangle(363,700,8,50)
+        canvas.drawRectangle(363,780,8,48)
+
+        //entry
+        canvas.drawRectangle(975,690,110,8)
+        canvas.drawRectangle(290,140,140,8)
+
+        canvas.drawRectangle()
+        canvas.setDrawMode("stroke")
+      //entry
+        canvas.setColor("black")
+        canvas.drawRectangle(290,100,30,100)
+
+        canvas.drawText(325,150,"Entry",fontSize=14)
+        //#exit
+        canvas.setColor("black")
+        canvas.drawRectangle(1060,650,30,100)
+
+        canvas.drawText(1030,700,"Exit",fontSize=15)
+
+        canvas.setColor("black")
+        canvas.drawText(530,90,"Parking Spaces",fontSize=50)
+
+        canvas.setColor("Blue")
+        canvas.drawRectangle(950,40,20,20)
+        canvas.drawText(980,60,"Available",fontSize=13)
+        canvas.setColor("Red")
+        canvas.drawRectangle(950,70,20,20)
+        canvas.drawText(980,90,"Occupied",fontSize=13)
+
+        //roads
+
+
+
         for(slot in data) {
             var x = data[slot].x;
             var y = data[slot].y;
             var available = data[slot].available;
+
             console.log(slot);
-            if(available)
-            canvas.setColor("green");
+            if(!available)
+            canvas.setColor("blue");
             else
             canvas.setColor("red");
-            canvas.drawRectangle(x - width / 2 + offsetX, y - height / 2 + offsetY, width, height); 
+            canvas.drawRectangle(x - width / 2 + offsetX, y - height / 2 + offsetY, width, height);
+            canvas.drawText(x,y+10,slot,fontSize=15)
         }
     }
 
-    // Override functions here; 
+    // Override functions here;
     canvas.mainFunction = main;
 
     var timeStep = 50;
