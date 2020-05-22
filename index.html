@@ -160,7 +160,11 @@
         canvas.drawText(980,90,"Occupied",fontSize=13)
 
         //roads
+        if(canvas.mouseDown()){
+          x_p = canvas.mouseDownX()
+          y_p = canvas.mouseDownY()
 
+        }
 
 
         for(slot in data) {
@@ -174,6 +178,10 @@
             else
             canvas.setColor("red");
             canvas.drawRectangle(x - width / 2 + offsetX, y - height / 2 + offsetY, width, height);
+            if((x_p>x - width / 2 + offsetX) && (x_p<x - width / 2 + offsetX + width) && (y_p> y - height / 2 + offsetY) && (y_p< y - height / 2 + offsetY + height){
+              canvas.setColor("yellow");
+              canvas.drawRectangle(x - width / 2 + offsetX, y - height / 2 + offsetY, width, height);
+            }
             canvas.drawText(x,y+10,slot,fontSize=15)
         }
     }
