@@ -32,3 +32,5 @@ for i in range(1,15):
         db.child("slots").child(slot_name).update({'available': 0})
         print("Slot ",x ," empty")
         print(db.child("slots").child(slot_name).child('available').get().val())
+    if(val==2):
+        print("Slot ",x,"Booked: Waiting to be occupied")
